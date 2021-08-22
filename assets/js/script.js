@@ -42,34 +42,38 @@ generateBtn.addEventListener("click", function () {
 function generatePassword() {
   // Asks for user input
   enter = parseInt(prompt("How many characters would you like your password? Choose between 8 and 128"));
-  // First if statement for user validation 
+  // Check against user not giving any info - falsy check
   if (!enter) {
       alert("This needs a value");
+      //range for character length
   } else if (enter < 8 || enter > 128) {
       // Validates user input
-      // Start user input prompts
+
+      // First input prompt- starts process
       enter = parseInt(prompt("You must choose between 8 and 128"));
 
   } else {
-      // Continues once user input is validated
+      // THis is validation section - means to check on 
       confirmNumber = confirm("Will this contain numbers?");
       confirmCharacter = confirm("Will this contain special characters?");
       confirmUppercase = confirm("Will this contain Uppercase letters?");
       confirmLowercase = confirm("Will this contain Lowercase letters?");
   };
 
-  // Else if for 4 negative options
+  // Else if for 4 negative options- 
   if (!confirmCharacter && !confirmNumber && !confirmUppercase && !confirmLowercase) {
+    //this is the safety check to make sure input is given
       choices = alert("You must choose a criteria!");
 
   }
-  // First if statement that uses user input prompts to determine choices
-  // Else if for 4 positive options
+  // conditionals that determine choices
+
+  // options for 4 positive options- if user says yes to all criteria
   else if (confirmCharacter && confirmNumber && confirmUppercase && confirmLowercase) {
 
       choices = character.concat(number, alpha, alpha2);
   }
-  // Else if for 3 positive options
+  // opts for 3 positive options
   else if (confirmCharacter && confirmNumber && confirmUppercase) {
       choices = character.concat(number, alpha2);
   }
@@ -82,7 +86,7 @@ function generatePassword() {
   else if (confirmNumber && confirmLowercase && confirmUppercase) {
       choices = number.concat(alpha, alpha2);
   }
-  // Else if for 2 positive options 
+  // option for 2 positive options 
   else if (confirmCharacter && confirmNumber) {
       choices = character.concat(number);
 
@@ -116,5 +120,28 @@ function generatePassword() {
       choices = space.concat(alpha2);
   };
 
+ // password variable is an array placeholder for user generated amount of length
+ var password = [];
 
+ // Section to add randomness - look at last two sections of mod.3
+
+ // Random selection for all variables: -- math random and math floor / ceiling will come into play
+ for (var i = 0; i < enter; i++) {
+     var pickChoices = choices[Math.floor(Math.random() * choices.length)];
+     //pushes data into array
+     password.push(pickChoices);
+ }
+ // joins the password array and converts it to a string - mdn insipired "join is new"
+ var pg = password.join("");
+ UserInput(pg);
+ return pg;
+}
+// This puts the password value into the textbox
+
+//modified to all textcontent
+function UserInput(pg) {
+  //this will give us text 
+ document.getElementById("password").textContent = pg;
+
+}
 
